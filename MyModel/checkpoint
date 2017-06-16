@@ -1,0 +1,2 @@
+model_checkpoint_path: "\\MyModel\\CNNModel"
+all_model_checkpoint_paths: "\\MyModel\\CNNModel"
