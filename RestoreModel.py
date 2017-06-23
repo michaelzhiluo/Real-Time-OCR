@@ -15,12 +15,17 @@ keep_prob = graph.get_tensor_by_name("keep_prob:0")
 
 predict = graph.get_tensor_by_name("predicted_number:0")
 
-img = cv2.imread("Seven.jpg")
+img = cv2.imread("Six.jpg")
 matrix = ConvertToMNIST.clusterImage(img, 3);
 temp = ConvertToMNIST.convertImageToMNIST(matrix)
 
 plt.imshow(temp, cmap = 'gray')
 plt.show()
+
+
+prediction = sess.run(predict, feed_dict ={training_data: [temp.flatten()] ,training_labels: [[0,0,0,0,0,0,0,0,0,1]], keep_prob: 1})
+print(prediction)
+
 '''
 video = cv2.VideoCapture(0)
 while(True):
@@ -30,9 +35,3 @@ while(True):
     cv2.waitKey(5)
 
 '''
-#prediction = sess.run(predict, feed_dict ={training_data: t_data ,training_labels: t_label, keep_prob: 1})
-
-#print(prediction)
-#temp = np.argmax(t_label, 1) 
-#print(temp)
-#print(np.equal(prediction, temp))
