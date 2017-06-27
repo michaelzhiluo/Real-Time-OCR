@@ -15,16 +15,17 @@ keep_prob = graph.get_tensor_by_name("keep_prob:0")
 
 predict = graph.get_tensor_by_name("predicted_number:0")
 
-img = cv2.imread("Six.jpg")
+img = cv2.imread("Eight.jpg")
 matrix = ConvertToMNIST.clusterImage(img, 3);
 temp = ConvertToMNIST.convertImageToMNIST(matrix)
+
+print(temp)
+prediction = sess.run(predict, feed_dict ={training_data: [temp.flatten()] ,training_labels: [[0,0,0,0,0,0,0,0,0,1]], keep_prob: 1})
+print(prediction)
 
 plt.imshow(temp, cmap = 'gray')
 plt.show()
 
-
-prediction = sess.run(predict, feed_dict ={training_data: [temp.flatten()] ,training_labels: [[0,0,0,0,0,0,0,0,0,1]], keep_prob: 1})
-print(prediction)
 
 '''
 video = cv2.VideoCapture(0)
