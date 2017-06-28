@@ -23,5 +23,7 @@ def clusterImage(img, numclusters):
     center = np.uint8(center)
     ans = center[label.flatten()]
     res2 = ans.reshape((img.shape))
+    cv2.imshow("hi", res2)
+    cv2.waitKey(0);
     return res2
 
