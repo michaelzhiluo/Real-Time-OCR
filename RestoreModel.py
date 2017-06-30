@@ -19,6 +19,7 @@ keep_prob = graph.get_tensor_by_name("keep_prob:0")
 predict = graph.get_tensor_by_name("predicted_number:0")
 
 counter =0
+gg =0
 for j in range(0, 10):
 	counter =0
 	for i in range(0, 500):
@@ -30,5 +31,9 @@ for j in range(0, 10):
 			counter+=1
 	print(j)
 	print(str(counter) + "/500")
+	gg+=counter
+
+print("total accuracy:" + str(gg/5000.0))
+	
 		#plt.imshow(np.array(temp).reshape((28, 28)), cmap = 'gray')
 		#plt.show()

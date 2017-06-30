@@ -94,6 +94,8 @@ with tf.Session() as sess:
     batch_index = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     while step * batch_size < num_iterations:
         batch_x, batch_y = mnist.train.next_batch(batch_size)
+        # Adding Computer MNIST into batch_x and batch_y, watch this foolish code
+        
         sess.run(optimizer, feed_dict={training_data: batch_x, training_labels: batch_y, keep_prob: dropout_prob})
         
         if(step%100==0):
