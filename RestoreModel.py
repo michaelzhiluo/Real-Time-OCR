@@ -18,12 +18,17 @@ keep_prob = graph.get_tensor_by_name("keep_prob:0")
 
 predict = graph.get_tensor_by_name("predicted_number:0")
 
-temp = cv2.imread("C:\\Users\\Michael Luo\\Documents\\ComputerMNIST\\9\\252495.jpg")
-temp = ConvertToMNIST.clusterImage(temp)
-temp = ConvertToMNIST.imageprepare(Image.fromarray(temp))
-
-prediction = sess.run(predict, feed_dict ={training_data: [temp] ,training_labels: [[0,0,0,0,0,0,0,0,0,1]], keep_prob: 1})
-print(prediction)
-#print(temp)
-plt.imshow(np.array(temp).reshape((28, 28)), cmap = 'gray')
-plt.show()
+counter =0
+for j in range(0, 10):
+	counter =0
+	for i in range(0, 500):
+		temp = cv2.imread("C:\\Users\\Michael Luo\\Documents\\ComputerMNIST\\"  + str(j) + "\\" + str(i) + ".jpg")
+		temp = ConvertToMNIST.clusterImage(temp)
+		temp = ConvertToMNIST.imageprepare(Image.fromarray(temp))
+		prediction = sess.run(predict, feed_dict ={training_data: [temp] ,training_labels: [[0,0,0,0,0,0,0,0,0,1]], keep_prob: 1})
+		if(prediction == j):
+			counter+=1
+	print(j)
+	print(str(counter) + "/500")
+		#plt.imshow(np.array(temp).reshape((28, 28)), cmap = 'gray')
+		#plt.show()

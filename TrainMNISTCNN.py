@@ -91,7 +91,7 @@ saver = tf.train.Saver()
 with tf.Session() as sess:
     sess.run(init)
     step = 1
-    
+    batch_index = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     while step * batch_size < num_iterations:
         batch_x, batch_y = mnist.train.next_batch(batch_size)
         sess.run(optimizer, feed_dict={training_data: batch_x, training_labels: batch_y, keep_prob: dropout_prob})
