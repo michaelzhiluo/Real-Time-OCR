@@ -30,6 +30,7 @@ def imageprepare(im):
   #normalize pixels to 0 and 1. 0 is pure white, 1 is pure black.
   tva = [ (255-x)*1.0/255.0 for x in tv] 
   return tva
+
 def convertImageToMNIST(img):
 	resize = cv2.resize(img, dsize =(28, 28))
 	gray = cv2.cvtColor(resize, cv2.COLOR_BGR2GRAY)
@@ -42,11 +43,11 @@ def convertImageToMNIST(img):
 	num = (num -np.min(num))/(np.max(num) - np.min(num))
 	return num
 
-def clusterImage(img, numclusters):
+def clusterImage(img):
     convert = img.reshape((img.shape[0]*img.shape[1],3))
     convert = np.float32(convert)
     criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 1.0)
-    ret,label,center=cv2.kmeans(convert,numclusters,None,criteria,10,cv2.KMEANS_RANDOM_CENTERS)
+    ret,label,center=cv2.kmeans(convert,2,None,criteria,10,cv2.KMEANS_RANDOM_CENTERS)
     center = np.uint8(center)
     if(difference(center[0], img[0][0]) > difference(center[1], img[0][0])):
     	center[1] = [255.0, 255.0, 255.0]
@@ -59,5 +60,8 @@ def clusterImage(img, numclusters):
     return res2
 
 def difference(cluster, pixel):
-	return abs(cluster[0] - pixel[0] ) + abs(cluster[1]-pixel[1]) + abs(cluster[2] - pixel[2])
+	c = np.int16(cluster)
+	p = np.int16(pixel)
+
+	return abs(c[0] - p[0] ) + abs(c[1]-p[1]) + abs(c[2] - p[2])
 
