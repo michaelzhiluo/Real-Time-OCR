@@ -1,12 +1,12 @@
 import numpy as np
 
 
-class ComputerMNIST:
+class ComputerMNIST(object):
 
-	def ComputerMNIST(self):
+	def __init__(self):
 		self._images = np.load("ComputerMNISTImages.npy")
 		self._labels = np.load("ComputerMNISTLabels.npy")
-		self.num_examples = len(images)
+		self.num_examples = len(self._images)
 		self.num_epochs =0
 		self.index_in_epoch =0
 
@@ -31,10 +31,10 @@ class ComputerMNIST:
 			labels2 = self._labels[0: self.index_in_epoch]
 
 			return np.concatenate((images1, images2), axis =0), np.concatenate((labels1, labels2), axis =0)
-
+		
+		start = self.index_in_epoch
 		self.index_in_epoch += batch_size
-		return self._images[start: start+batch_size], self._labels[start: start + batch_size]
-
+		return self._images[start: self.index_in_epoch], self._labels[start: self.index_in_epoch]
 
 	@property
 	def images(self):
@@ -43,8 +43,3 @@ class ComputerMNIST:
 	@property
 	def labels(self):
 		return self._labels
-
-
-test = ComputerMNIST()
-steps =0
-while(steps <=1000)
