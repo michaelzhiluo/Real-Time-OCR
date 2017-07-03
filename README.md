@@ -1,2 +1,9 @@
-# OCR-Deep-Learning
-Uses trained MNIST CNN to classify digits in real time
+# Realtime Optical Character Recognition with Deep Learning  [![Build Status]
+
+## How to Install
+
+
+
+
+
+
