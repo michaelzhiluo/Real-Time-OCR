@@ -2,6 +2,7 @@ from __future__ import print_function
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
+import ComputerMNIST
 
 filter_height_conv_layer_1 = 5
 filter_width_conv_layer_1 = 5
@@ -24,6 +25,8 @@ batch_size = 128
 rate_learning = 0.001
 dropout_prob = 0.75
 test_batch_size = 512
+ComputerMNIST_batch_size = 50
+case =2
 
 # Import MNIST data
 from tensorflow.examples.tutorials.mnist import input_data
@@ -87,21 +90,30 @@ accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
 
 init = tf.global_variables_initializer()
 saver = tf.train.Saver()
-
+added_training = ComputerMNIST.ComputerMNIST() 
 with tf.Session() as sess:
     sess.run(init)
     step = 1
-    batch_index = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     while step * batch_size < num_iterations:
-        batch_x, batch_y = mnist.train.next_batch(batch_size)
-        # Adding Computer MNIST into batch_x and batch_y, watch this foolish code
-        
+        batch_x = []
+        batch_y = []
+        # Case 0: Only Use MNIST, Case 1: Use MNIST + Computer MNIST, Case 2: Only Computer MNIST
+        if case ==0:
+            batch_x, batch_y = mnist.train.next_batch(batch_size)
+        elif case ==1:        
+            batch_x, batch_y = mnist.train.next_batch(batch_size)
+            # Adding Computer MNIST into batch_x and batch_y
+            temp_x, temp_y = added_training.next_batch(ComputerMNIST_batch_size)
+            batch_x = np.concatenate((batch_x, temp_x), axis =0)
+            batch_y = np.concatenate((batch_y, temp_y), axis =0)
+        elif case ==2:
+            batch_x, batch_y = added_training.next_batch(ComputerMNIST_batch_size)
+
+
         sess.run(optimizer, feed_dict={training_data: batch_x, training_labels: batch_y, keep_prob: dropout_prob})
         
         if(step%100==0):
-            loss, acc = sess.run([cost, accuracy], feed_dict={training_data: batch_x,
-                                                           training_labels: batch_y, keep_prob: 1
-                                                              })
+            loss, acc = sess.run([cost, accuracy], feed_dict={training_data: batch_x, training_labels: batch_y, keep_prob: 1})
             print("Generation " + str(step*batch_size) + " with normal batch, Minibatch Loss= " + \
                   "{:.6f}".format(loss) + ", Training Accuracy= " + \
                   "{:.5f}".format(acc))

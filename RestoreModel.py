@@ -7,9 +7,10 @@ import os
 #from tensorflow.examples.tutorials.mnist import input_data
 #mnist = input_data.read_data_sets("/tmp/data/", one_hot=True)
 from PIL import Image, ImageFilter
+
 sess=tf.Session()    
-saver = tf.train.import_meta_graph('C:\\MyModel\\CNNModel.meta')
-saver.restore(sess,tf.train.latest_checkpoint('C:\\MyModel'))
+saver = tf.train.import_meta_graph('\\MyModel\\CNNModel.meta')
+saver.restore(sess,tf.train.latest_checkpoint('\\MyModel'))
 
 graph = tf.get_default_graph()
 training_data = graph.get_tensor_by_name("training_data:0")
@@ -17,6 +18,8 @@ training_labels = graph.get_tensor_by_name("training_labels:0")
 keep_prob = graph.get_tensor_by_name("keep_prob:0")
 
 predict = graph.get_tensor_by_name("predicted_number:0")
+
+
 
 counter =0
 gg =0
@@ -34,6 +37,3 @@ for j in range(0, 10):
 	gg+=counter
 
 print("total accuracy:" + str(gg/5000.0))
-	
-		#plt.imshow(np.array(temp).reshape((28, 28)), cmap = 'gray')
-		#plt.show()

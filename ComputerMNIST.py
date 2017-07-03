@@ -1,6 +1,5 @@
 import numpy as np
 
-
 class ComputerMNIST(object):
 
 	def __init__(self):
