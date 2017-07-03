@@ -120,7 +120,7 @@ with tf.Session() as sess:
         step += 1
         
     
-    ltr = saver.save(sess, "\\MyModel\\CNNModel")
+    ltr = saver.save(sess, "MyModel\\CNNModel")
 
     data = mnist.test.images[:test_batch_size];
     labels = mnist.test.labels[:test_batch_size];

@@ -9,7 +9,7 @@ import os
 from PIL import Image, ImageFilter
 
 sess=tf.Session()    
-saver = tf.train.import_meta_graph('\\MyModel\\CNNModel.meta')
+saver = tf.train.import_meta_graph('MyModel\\CNNModel.meta')
 saver.restore(sess,tf.train.latest_checkpoint('\\MyModel'))
 
 graph = tf.get_default_graph()
