@@ -37,7 +37,7 @@ roi += [[396, 423, 305, 365]]
 roi += [[435, 462, 305, 365]]
 roi += [[463, 487, 305, 365]]
 
-while(counter <=20000):
+while(counter <=15000):
 	frame =  cv2.imread("C:\\Users\\Michael Luo\\Documents\\ComputerDigitsTrainingImages\\" + str(counter) + ".jpg");
 	prediction = [] 
 	for i in range(0, len(roi)):

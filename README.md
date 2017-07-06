@@ -8,7 +8,7 @@ The recognition rate for computer digits is around 99.84%, which is a much bette
 
 For the following files to compile, these modules must be installed.
 ```shell
-$ pip install numpy scipy matplotlib opencv-python tensorflow sklearn
+$ pip install numpy scipy matplotlib opencv-python tensorflow
 ```
 
 ## General Overview
