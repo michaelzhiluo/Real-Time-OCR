@@ -4,12 +4,44 @@ OCR-Deep-Learning uses a webcam projected on a computer screen to identify the d
 The recognition rate for computer digits is around 99.84%, which is a much better improvement than using KNN for recognition (~80%). 
 
 [![Watch the video](https://j.gifs.com/Y6ON7W.gif)](https://www.youtube.com/watch?v=HX0PBi470eY&feature=youtu.be)
-## Installation 
+## Online Installation 
+
+[Download Webcam Images (20k frames, ~4 GB)](https://mega.nz/#F!R6RA0ZIS!ft-uwqvbXbEMAAaQF0dOlA)
+
+Install [Anaconda](https://repo.continuum.io/archive/Anaconda3-4.4.0-Windows-x86_64.exe) with Enivironmental Variables option selected. 
+
+If installed correctly, the pip command should exist in cmd. 
 
 For the following files to compile, these modules must be installed.
 ```shell
 $ pip install numpy scipy matplotlib opencv-python tensorflow
 ```
+
+## Installation for Offline Machines
+
+On a computer that can access internet, follow the instructions for "Online Installation".
+
+Next, the .whl files for OpenCV and TensorFlow modules must be downloaded.
+
+On the online computer, create a folder with FOLDER_PATHNAME for .whl files to be stored in.
+```shell
+$ pip install --download FOLDER_PATHNAME opencv-python tensorflow  
+```
+Through SSH or real-life means, transfer webcam files, this Repo, and .whl folder to the offline machine.
+
+Keep in mind that both the online and offline machine must be at least a 64 bit machine, as TensorFlow does not have existing .whl files for 32 bit machines.
+
+This installation guides now assumes that:
+ * Webcam Images, Git Repo, and .whl file have been downloaded/transferred to offline machine
+ * Python and Pip are installed on offline machine. (Transfer Anaconda install file to offline computer if not)
+ 
+On the offline machine, type: 
+```shell
+$ pip install --no-index --find-links=FOLDER_PATHNAME_IN_OFFLINE_MACHINE opencv-python tensorflow  
+```
+
+If this does not work, then your computer may be 32 bit or that the .whl file versions do not fit with Anaconda's requirements.
+In that case, create your own custom requirements.txt files and run it pip.
 
 ## General Overview
 
