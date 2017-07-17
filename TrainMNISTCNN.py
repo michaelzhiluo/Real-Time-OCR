@@ -4,6 +4,7 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 import ComputerMNIST
 
+#Input Variables
 filter_height_conv_layer_1 = 5
 filter_width_conv_layer_1 = 5
 layer_1_channels = 32
