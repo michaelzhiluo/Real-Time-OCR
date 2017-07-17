@@ -4,6 +4,12 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 import ComputerMNIST
 
+"""
+    TrainMNISTCNN:
+    This files contains a 3-layer Convoluted Neural Network model.
+    Uses both MNIST and my own ComputerMNIST data to train model over 200000 iterations.
+"""
+
 #Input Variables
 filter_height_conv_layer_1 = 5
 filter_width_conv_layer_1 = 5
@@ -27,7 +33,7 @@ rate_learning = 0.001
 dropout_prob = 0.75
 test_batch_size = 512
 ComputerMNIST_batch_size = 50
-case =2
+case =1
 
 # Import MNIST data
 from tensorflow.examples.tutorials.mnist import input_data

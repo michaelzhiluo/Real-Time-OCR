@@ -4,6 +4,18 @@ import ConvertToMNIST
 from PIL import Image, ImageFilter
 import random
 
+"""
+	This file converts training images from COMPUTERMNIST/ into a .npy file used for training.
+	Contains three methods.
+	1: fillImagesLabels
+		Converts a noisy computer image by 2-Means clusteirng and converting into 784 length numpy array.
+		Also appends label to another numpy array
+	2: mutualShuffle
+		Shuffles both images and labels
+	3: save
+		Saves images and labels to a .npy file
+"""
+
 def fillImagesLabels(numclasses, imagesperclass, filename):
 	images = []
 	labels = []

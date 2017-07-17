@@ -8,6 +8,12 @@ import os
 #mnist = input_data.read_data_sets("/tmp/data/", one_hot=True)
 from PIL import Image, ImageFilter
 
+"""
+	RestoreModel
+	Runs the webcame images and restored neural network model to identify webcam images.
+"""
+
+
 sess=tf.Session()    
 saver = tf.train.import_meta_graph('MyModel\\CNNModel.meta')
 saver.restore(sess,tf.train.latest_checkpoint('MyModel'))

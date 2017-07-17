@@ -1,6 +1,11 @@
 import numpy as np
 import cv2
 
+"""
+	From webcame frames, selects region of interest and converts them into ComputerMNIST images.
+	As of now, ROI is harcoded.
+"""
+
 counter =0
 roi = []
 # 0 -> x1, 1 -> x2, 2 -> y1, 3-> y2

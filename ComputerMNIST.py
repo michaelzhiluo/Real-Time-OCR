@@ -1,5 +1,11 @@
 import numpy as np
 
+"""
+	Contains the ComputerMNIST class which represents a 5000 numpy array of labels and images.
+	next_batch selects a batch of size batch_size from the 5000 lenght numpy array. 
+	This also includes reshuffling every epoch.
+"""
+
 class ComputerMNIST(object):
 
 	def __init__(self):
