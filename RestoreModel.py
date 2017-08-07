@@ -12,9 +12,34 @@ from PIL import Image, ImageFilter
 	RestoreModel
 	Runs the webcame images and restored neural network model to identify webcam images.
 """
-
+refPt = []
+uppercorner =[]
+cropping = False
+ 
+def click_and_crop(event, x, y, flags, param):
+	# grab references to the global variables
+	global refPt, cropping, uppercorner
+ 
+	# if the left mouse button was clicked, record the starting
+	# (x, y) coordinates and indicate that cropping is being
+	# performed
+	if event == cv2.EVENT_LBUTTONDOWN:
+		uppercorner = (x, y)
+		cropping = True
+	elif event == cv2.EVENT_LBUTTONUP:
+		# record the ending (x, y) coordinates and indicate that
+		# the cropping operation is finished
+		refPt += [[uppercorner, (x,y)]]
+		cropping = False
+	if cropping:
+ 		cv2.rectangle(img, uppercorner, (x,y), (0, 255, 0), 1)
+ 		cv2.imshow("input", img)
+ 
 
 sess=tf.Session()    
+#s1 = input("Pathname Folder where CNN Model is stored (Meta file must be named \"CNNModel.meta\"):")
+#saver = tf.train.import_meta_graph(s1 + "\\CNNModel.meta")
+#saver.restore(sess,tf.train.latest_checkpoint(s1))
 saver = tf.train.import_meta_graph('MyModel\\CNNModel.meta')
 saver.restore(sess,tf.train.latest_checkpoint('MyModel'))
 
@@ -25,46 +50,47 @@ keep_prob = graph.get_tensor_by_name("keep_prob:0")
 
 predict = graph.get_tensor_by_name("predicted_number:0")
 
-counter =11000
-roi = []
-# 0 -> x1, 1 -> x2, 2 -> y1, 3-> y2
-roi += [[320, 345, 115, 175]]
-roi += [[345, 373, 115, 175]]
-roi += [[372, 399, 115, 175]]
-roi += [[398, 427, 115, 175]]
-roi += [[438, 465, 115, 175]]
-roi += [[465, 491, 115, 175]]
-roi += [[268, 292, 305, 365]]
-roi += [[292, 318, 305, 365]]
-roi += [[319, 344, 305, 365]]
-roi += [[345, 368, 305, 365]]
-roi += [[370, 395, 305, 365]]
-roi += [[396, 423, 305, 365]]
-roi += [[435, 462, 305, 365]]
-roi += [[463, 487, 305, 365]]
 
-while(counter <=15000):
-	frame =  cv2.imread("C:\\Users\\Michael Luo\\Documents\\ComputerDigitsTrainingImages\\" + str(counter) + ".jpg");
+cap = cv2.VideoCapture(0)
+cv2.namedWindow("input")
+cv2.setMouseCallback("input", click_and_crop)
+print("Select Region of Interests from the Webcam:")
+print("(Press Q to Finish ROI Selection)")
+while True:
+	ret, img = cap.read()
+	cv2.imshow("input", img)
+	for i in refPt:
+		cv2.rectangle(img, i[0], i[1], (0, 255, 0), 1)
+		cv2.imshow("input", img)
+	key = cv2.waitKey(1)
+	if key == ord("q"):
+		break
+
+cv2.destroyAllWindows();
+
+roi = []
+for i in refPt:
+	lel = [i[0][0], i[1][0], i[0][1], i[1][1]]
+	roi += [lel]
+
+while True:
+	ret, img = cap.read()
+	#frame =  cv2.imread("C:\\Users\\Michael Luo\\Documents\\WebcamImages\\" + str(counter) + ".jpg")
 	prediction = [] 
 	for i in range(0, len(roi)):
-		temp = frame[roi[i][2]: roi[i][3], roi[i][0]: roi[i][1]]
+		temp = img[roi[i][2]: roi[i][3], roi[i][0]: roi[i][1]]
 		temp = ConvertToMNIST.clusterImage(temp)
 		temp = ConvertToMNIST.imageprepare(Image.fromarray(temp))
+		plt.plot(temp)
 		pred = sess.run(predict, feed_dict ={training_data: [temp] ,training_labels: [[1,0,0,0,0,0,0,0,0,0]], keep_prob: 1})
 		prediction += [pred[0]]
 
 	for i in range(0, len(roi)):
-		cv2.rectangle(frame, (roi[i][0], roi[i][2]), (roi[i][1], roi[i][3]), (255, 255, 255))
-		cv2.putText(frame, str(prediction[i]), (roi[i][0] - 10, roi[i][2] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 255, 0), 2)
-	cv2.imshow('frame',frame)
-	if cv2.waitKey(1) & 0xFF == ord('q'):
+		cv2.rectangle(img, (roi[i][0], roi[i][2]), (roi[i][1], roi[i][3]), (255, 255, 255))
+		cv2.putText(img, str(prediction[i]), (roi[i][0] - 10, roi[i][2] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 255, 0), 2)
+	cv2.imshow('input',img)
+	if cv2.waitKey(100) & 0xFF == ord('q'):
 		break
-	counter+=1
-
-
-cv2.destroyAllWindows()
-
-
 """
 counter =0
 gg =0

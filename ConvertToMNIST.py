@@ -27,7 +27,7 @@ def imageprepare(im):
   
   if width > height: 
     nheight = int(round((20.0/width*height),0)) 
-    if (nheigth == 0): 
+    if (nheight == 0): 
       nheigth = 1  
     img = im.resize((20,nheight), Image.ANTIALIAS).filter(ImageFilter.SHARPEN)
     wtop = int(round(((28 - nheight)/2),0)) 
@@ -54,3 +54,4 @@ def difference(cluster, pixel):
 
 	return abs(c[0] - p[0] ) + abs(c[1]-p[1]) + abs(c[2] - p[2])
 
+	
