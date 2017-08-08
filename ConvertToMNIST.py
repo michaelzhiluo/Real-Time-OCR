@@ -47,6 +47,16 @@ def imageprepare(im):
   tva = [ (255-x)*1.0/255.0 for x in tv] 
   return tva
 
+def getBoundingBox(image):
+	img = 255 - image
+	gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+	_, contours, hierarchy = cv2.findContours(gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+	rects = []
+	for con in contours:
+		rects +=[cv2.boundingRect(con)]
+		rects = sorted(rects, key = lambda x: x[2]*x[3], reverse = True)
+	return image[rects[0][1]: rects[0][1] + rects[0][3], rects[0][0]: rects[0][0] + rects[0][2]]
+
 # Not part of API
 def difference(cluster, pixel):
 	c = np.int16(cluster)
@@ -54,4 +64,3 @@ def difference(cluster, pixel):
 
 	return abs(c[0] - p[0] ) + abs(c[1]-p[1]) + abs(c[2] - p[2])
 
-	

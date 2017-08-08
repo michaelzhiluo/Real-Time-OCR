@@ -22,7 +22,7 @@ def fillImagesLabels(numclasses, imagesperclass, filename):
 	for i in range(0, numclasses):
 		for j in range(0, imagesperclass):		
 			image = cv2.imread(filename + "\\"  + str(i) + "\\" + str(j) + ".jpg")
-			clustered = ConvertToMNIST.clusterImage(image)
+			clustered = ConvertToMNIST.getBoundingBox(ConvertToMNIST.clusterImage(image))
 			final = ConvertToMNIST.imageprepare(Image.fromarray(clustered))
 			images += [final]
 			temp = [0,0,0,0,0,0,0,0,0,0]
@@ -50,5 +50,5 @@ images = []
 labels = []
 images, labels = fillImagesLabels(10, 500, "ComputerMNIST")
 images, labels = mutualShuffle(images, labels)
-save(images, "ComputerMNISTImages")
-save(labels, "ComputerMNISTLabels")
+save(images, "ComputerMNISTImagesBounded")
+save(labels, "ComputerMNISTLabelsBounded")

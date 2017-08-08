@@ -9,8 +9,8 @@ import numpy as np
 class ComputerMNIST(object):
 
 	def __init__(self):
-		self._images = np.load("ComputerMNISTImages.npy")
-		self._labels = np.load("ComputerMNISTLabels.npy")
+		self._images = np.load("ComputerMNISTImagesBounded.npy")
+		self._labels = np.load("ComputerMNISTLabelsBounded.npy")
 		self.num_examples = len(self._images)
 		self.num_epochs =0
 		self.index_in_epoch =0

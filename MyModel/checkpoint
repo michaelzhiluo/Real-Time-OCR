@@ -1,2 +1,2 @@
-model_checkpoint_path: "CNNModel"
-all_model_checkpoint_paths: "CNNModel"
+model_checkpoint_path: "CNNModelBounded"
+all_model_checkpoint_paths: "CNNModelBounded"

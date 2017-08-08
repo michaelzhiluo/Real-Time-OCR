@@ -40,7 +40,7 @@ sess=tf.Session()
 #s1 = input("Pathname Folder where CNN Model is stored (Meta file must be named \"CNNModel.meta\"):")
 #saver = tf.train.import_meta_graph(s1 + "\\CNNModel.meta")
 #saver.restore(sess,tf.train.latest_checkpoint(s1))
-saver = tf.train.import_meta_graph('MyModel\\CNNModel.meta')
+saver = tf.train.import_meta_graph('MyModel\\CNNModelBounded.meta')
 saver.restore(sess,tf.train.latest_checkpoint('MyModel'))
 
 graph = tf.get_default_graph()

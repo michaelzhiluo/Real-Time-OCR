@@ -14,11 +14,11 @@ from PIL import Image, ImageFilter
 """
 
 sess=tf.Session()    
-s1 = input("Pathname Folder where CNN Model is stored (Meta file must be named \"CNNModel.meta\"):")
-saver = tf.train.import_meta_graph(s1 + "\\CNNModel.meta")
-saver.restore(sess,tf.train.latest_checkpoint(s1))
-#saver = tf.train.import_meta_graph('MyModel\\CNNModel.meta')
-#saver.restore(sess,tf.train.latest_checkpoint('MyModel'))
+#s1 = input("Pathname Folder where CNN Model is stored (Meta file must be named \"CNNModel.meta\"):")
+#saver = tf.train.import_meta_graph(s1 + "\\CNNModel.meta")
+#saver.restore(sess,tf.train.latest_checkpoint(s1))
+saver = tf.train.import_meta_graph('MyModel\\CNNModelBounded.meta')
+saver.restore(sess,tf.train.latest_checkpoint('MyModel'))
 
 graph = tf.get_default_graph()
 training_data = graph.get_tensor_by_name("training_data:0")
@@ -45,20 +45,21 @@ roi += [[396, 423, 305, 365]]
 roi += [[435, 462, 305, 365]]
 roi += [[463, 487, 305, 365]]
 
-s2 = input("Pathname Folder for Webcam Images/Frames:")
+#s2 = input("Pathname Folder for Webcam Images/Frames:")
+counter = 11000
 while(counter <=15000):
-	frame =  cv2.imread(s2 + str(counter) + ".jpg")
-	#frame =  cv2.imread("C:\\Users\\Michael Luo\\Documents\\WebcamImages\\" + str(counter) + ".jpg")
+	#frame =  cv2.imread(s2 + str(counter) + ".jpg")
+	frame =  cv2.imread("C:\\Users\\Michael Luo\\Documents\\WebcamImages\\" + str(counter) + ".jpg")
 	prediction = [] 
 	for i in range(0, len(roi)):
 		temp = frame[roi[i][2]: roi[i][3], roi[i][0]: roi[i][1]]
-		temp = ConvertToMNIST.clusterImage(temp)
+		temp = ConvertToMNIST.getBoundingBox(ConvertToMNIST.clusterImage(temp))
 		temp = ConvertToMNIST.imageprepare(Image.fromarray(temp))
 		pred = sess.run(predict, feed_dict ={training_data: [temp] ,training_labels: [[1,0,0,0,0,0,0,0,0,0]], keep_prob: 1})
 		prediction += [pred[0]]
 
 	for i in range(0, len(roi)):
-		cv2.rectangle(frame, (roi[i][0], roi[i][2]), (roi[i][1], roi[i][3]), (255, 255, 255))
+		cv2.rectangle(frame, (roi[i][0], roi[i][2]), (roi[i][1], roi[i][3]), (255, 255, 255), 1)
 		cv2.putText(frame, str(prediction[i]), (roi[i][0] - 10, roi[i][2] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 255, 0), 2)
 	cv2.imshow('frame',frame)
 	if cv2.waitKey(1) & 0xFF == ord('q'):
