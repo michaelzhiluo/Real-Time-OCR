@@ -3,7 +3,16 @@ OCR-Deep-Learning uses a webcam projected on a computer screen to identify the d
 
 The recognition rate for computer digits is around 99.84%, which is a much better improvement than using KNN for recognition (~80%). 
 
+Below are two videos showcasing my project. 
+
+### RestoreModel.py
+
+[![Watch the video](https://media.giphy.com/media/14yjGp8lZ5YqPK/giphy.gif)](https://www.youtube.com/watch?v=fZrRL2xBSk0&feature=youtu.be)
+
+### RestoreModelDemo.py
+
 [![Watch the video](https://j.gifs.com/Y6ON7W.gif)](https://www.youtube.com/watch?v=HX0PBi470eY&feature=youtu.be)
+
 ## Online Installation 
 
 [Download Webcam Images (20k frames, ~4 GB)](https://mega.nz/#F!Yu4n0J5I!Jhk2IacTT-Kcn04DQrFJMQ)
